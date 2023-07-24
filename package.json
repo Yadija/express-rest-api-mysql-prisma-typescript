@@ -12,12 +12,15 @@
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
-    "transformIgnorePatterns": ["/node_modules/(?!nanoid/)"]
+    "transformIgnorePatterns": [
+      "/node_modules/(?!nanoid/)"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^4.16.2",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
