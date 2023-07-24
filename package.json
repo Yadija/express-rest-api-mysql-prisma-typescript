@@ -4,14 +4,15 @@
   "description": "Express Rest API MySQL Prisma with Typescript",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "start:dev": "nodemon src/app.js",
+    "start": "npx tsc -w",
+    "start:dev": "npx nodemon",
     "test": "jest -i"
   },
   "jest": {
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
-    }
+    },
+    "transformIgnorePatterns": ["/node_modules/(?!nanoid/)"]
   },
   "keywords": [],
   "author": "",
