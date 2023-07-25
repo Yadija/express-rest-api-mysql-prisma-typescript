@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 import { prismaClient } from '../application/database'
 
 // exceptions
+import AuthenticationError from '../exceptions/AuthenticationError'
 import InvariantError from '../exceptions/InvariantError'
 import NotFoundError from '../exceptions/NotFoundError'
 
@@ -68,4 +69,30 @@ const getUserById = async (userId: string) => {
   })
 }
 
-export default { addUser, getUserById }
+const verifyUserCredential = async (username: string, password: string) => {
+  const user = await prismaClient.user.findUnique({
+    where: {
+      username
+    },
+    select: {
+      id: true,
+      password: true
+    }
+  })
+
+  if (!user) {
+    throw new AuthenticationError('username or password incorrect')
+  }
+
+  const { id, password: hashedPassword } = user
+
+  const match = await bcrypt.compare(password, hashedPassword)
+
+  if (!match) {
+    throw new AuthenticationError('username or password incorrect')
+  }
+
+  return id
+}
+
+export default { addUser, getUserById, verifyUserCredential }
